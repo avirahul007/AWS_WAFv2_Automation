@@ -1,6 +1,6 @@
 # Terraform AWS WAF
 
-This module is based on [AWS WAF Security Automations](https://aws.amazon.com/cn/solutions/aws-waf-security-automations/) written in cloudformation. It is not so good for deploying cloudformation will take more than 15 min, and we use terraform writing our infrastructure.
+This module is based on [AWS WAF Security Automations](https://aws.amazon.com/cn/solutions/aws-waf-security-automations/) written in cloudformation. 
 
 ## How does this AWS WAF Automation Solution helps?
 
