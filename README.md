@@ -2,13 +2,13 @@
 
 This module is based on [AWS WAF Security Automations](https://aws.amazon.com/cn/solutions/aws-waf-security-automations/) written in cloudformation. It is not so good for deploying cloudformation will take more than 15 min, and we use terraform writing our infrastructure.
 
-## What does this AWS Solution do?
+## How does this AWS WAF Automation Solution helps?
 
-AWS WAF is a web application firewall that enables customers to quickly create custom, application-specific rules that block common attack patterns that can affect application availability, compromise security, or consume excessive resources. AWS WAF can be completely administered via APIs which makes security automation easy, enabling rapid rule propagation and fast incident response.
+AWS WAF is a web application firewall that will enable us to quickly create custom, application-specific rules that block common attack patterns which can affect application availability, compromise security, or consume excessive resources. It will make WAF security automation easy, enabling rapid rule propagation and fast incident response.
 
-Configuring a web application firewall strategy can be challenging and burdensome to large and small organizations alike, especially for those who do not have dedicated security teams. To simplify this process, AWS offers a solution that uses AWS CloudFormation to automatically deploy a set of AWS WAF rules designed to filter common web-based attacks. Users can select from preconfigured protective features that define the rules included in an AWS WAF web access control list (web ACL), as depicted in the image to the right. Once the solution is deployed, AWS WAF will begin inspecting web requests to the user’s existing Amazon CloudFront distributions or Application Load Balancers, and block them when applicable.
+Note: AWS offers a solution that uses AWS CloudFormation Template to automatically deploy a set of AWS WAF rules designed to filter common web-based attacks. We can select from preconfigured protective features that define the rules included in an AWS WAF web access control list (web ACL). Once the solution is deployed, AWS WAF will begin inspecting web requests to the user’s existing Application Load Balancers, and block them when applicable.
 
-## AWS Solution overview
+## Solution overview
 
 The AWS WAF Security Automations solution provides fine-grained control over the requests attempting to access your web application. The diagram below presents the architecture you can build using the solution's implementation guide and accompanying AWS CloudFormation template.
 
@@ -17,7 +17,8 @@ At the core of the design is an AWS WAF web ACL that acts as central inspection 
 ![image](./waf-security-automations-architecture.png)
 
 ## AWS WAF Security Automations solution architecture
-Honeypot (A): This component creates a honeypot to lure and deflect content scrapers and bad bots. A discrete API Gateway endpoint (embedded in the web application) triggers a custom AWS Lambda function, which intercepts the suspicious request and adds the source IP address to the AWS WAF block list.
+
+**Honeypot (A)**: This component creates a honeypot to lure and deflect content scrapers and bad bots. A discrete API Gateway endpoint (embedded in the web application) triggers a custom AWS Lambda function, which intercepts the suspicious request and adds the source IP address to the AWS WAF block list.
 
 **SQL injection (B) and cross-site scripting (C) protection**: The solution automatically configures two native AWS WAF rules that protect against common SQL injection or cross-site scripting (XSS) patterns in the URI, query string, or body of a request.
 
@@ -31,7 +32,7 @@ Honeypot (A): This component creates a honeypot to lure and deflect content scra
 
 ## Deployment
 
-### Assumptions
+### Assumptions/Pre-requisites
 
 You have correctly configure your aws account, and export aws secrets as envrionment variable.
 ```bash
@@ -56,22 +57,6 @@ module "testalb" {
 
 ```
 
-2. example to use cloudfront as endpoint
-
-```hcl
-module "testcloudfront" {
-  source                                    = "../../modules/cloudfront"
-  access_log_bucket                         = "test-bucket-cloudfront"
-  aws_region                                = "ap-southeast-1"
-  sql_injection_protection_activated        = "yes"
-  cross_site_scripting_protection_activated = "yes"
-  http_flood_protection_activated           = "yes"
-  scanner_probe_protection_activated        = "yes"
-  reputation_lists_protection_activated     = "yes"
-  bad_bot_protection_activated              = "yes"
-}
-```
-
 ### Run example
 
 Deploy WAF ACL for ALB
@@ -81,15 +66,6 @@ $terraform init
 $terraform plan
 $terraform run
 ```
-
-Deploy WAF ACL for CloudFront
-```
-$cd examples/cloudfront
-$terraform init
-$terraform plan
-$terraform run
-```
-
 ---
 **Referance:**
 [AWS WAF Security Automations](https://aws.amazon.com/cn/solutions/aws-waf-security-automations/)
