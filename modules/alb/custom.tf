@@ -1,5 +1,5 @@
 module "configure_access_log_bucket" {
-  source              = "github.com/binhoul/terraform-aws-lambda-exec.git?ref=1.0.6"
+  source              = "github.com/avirahul007/terraform-aws-lambda-exec.git?ref=1.0.6"
   name                = "${var.stack_name}ConfigureAccessLogBucket"
   lambda_function_arn = "${aws_lambda_function.custom_resource.arn}"
   custom_name         = "ConfigureAccessLogBucket"
@@ -14,7 +14,7 @@ module "configure_access_log_bucket" {
 }
 
 module "populate_reputation_list" {
-  source              = "github.com/binhoul/terraform-aws-lambda-exec.git?ref=1.0.6"
+  source              = "github.com/avirahul007/terraform-aws-lambda-exec.git?ref=1.0.6"
   name                = "${var.stack_name}PopulateReputationList"
   lambda_function_arn = "${aws_lambda_function.custom_resource.arn}"
   custom_name         = "PopulateReputationList"
@@ -30,7 +30,7 @@ module "populate_reputation_list" {
 }
 
 module "configure_web_acl" {
-  source              = "github.com/binhoul/terraform-aws-lambda-exec.git?ref=1.0.6"
+  source              = "github.com/avirahul007/terraform-aws-lambda-exec.git?ref=1.0.6"
   name                = "${var.stack_name}ConfigureWebAcl"
   lambda_function_arn = "${aws_lambda_function.custom_resource.arn}"
   custom_name         = "ConfigureWebAcl"
